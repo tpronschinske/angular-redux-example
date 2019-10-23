@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, isDevMode } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { NgRedux, NgReduxModule, DevToolsExtension } from '@angular-redux/store';
+import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { createLogger } from 'redux-logger';
 import { IAppState, InitialState, rootReducer } from './store/store';
 import { routing } from './app.routes';
@@ -27,10 +27,9 @@ import { CommonModule, APP_BASE_HREF, LocationStrategy, HashLocationStrategy } f
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(public ngRedux: NgRedux<IAppState>, public devToolsExtension: DevToolsExtension){
-    let enhancers = isDevMode() ? [devToolsExtension.enhancer()] : [];
+  constructor(public ngRedux: NgRedux<IAppState>){
     let logger = isDevMode() ? [createLogger()] : [];
-    ngRedux.configureStore(rootReducer, InitialState, logger, enhancers);
+    ngRedux.configureStore(rootReducer, InitialState, logger);
   }
 }
 
